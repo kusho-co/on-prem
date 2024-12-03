@@ -1,0 +1,92 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: scripts/build/Dockerfile.prod
+      args:
+        COMMIT_HASH: latest
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=12345
+      - MYSQL_HOST=db
+      - ENVIRONMENT=dev
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OPENAI_API_KEY=""
+      - OPENAI_ORG_ID=""
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=kusho
+      - MYSQL_PASSWORD=12345
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "kusho", "-p12345" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    cap_add:
+      - SYS_NICE
+
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: always
+
+  worker:
+    build:
+      context: .
+      dockerfile: scripts/build/Dockerfile.worker
+    command: rq worker --url redis://redis:6379
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ENVIRONMENT=dev
+      - PYTHONPATH=/app
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=12345
+      - MYSQL_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: always
+
+  frontend:
+    build:
+      context: ../../Desktop/frontend/kusho-new-dashboard
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./public:/app/public
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
+  redis_data:
