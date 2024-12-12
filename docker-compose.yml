@@ -1,12 +1,8 @@
 services:
   backend:
-    build:
-      context: .
-      dockerfile: scripts/build/Dockerfile.prod
-      args:
-        COMMIT_HASH: latest
+    image: kusho_backend:latest
     ports:
-      - "8080:80"
+      - "8080:8080"
     environment:
       - MYSQL_USERNAME=root
       - MYSQL_PASSWORD=12345
@@ -28,8 +24,8 @@ services:
       - MYSQL_ROOT_PASSWORD=12345
       - MYSQL_USER=kusho
       - MYSQL_PASSWORD=12345
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
@@ -43,8 +39,8 @@ services:
 
   redis:
     image: redis:6.2-alpine
-    ports:
-      - "6379:6379"
+    # ports:
+    #   - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -56,9 +52,7 @@ services:
     restart: always
 
   worker:
-    build:
-      context: .
-      dockerfile: scripts/build/Dockerfile.worker
+    image: kusho_worker:latest
     command: rq worker --url redis://redis:6379
     environment:
       - REDIS_HOST=redis
@@ -76,9 +70,7 @@ services:
     restart: always
 
   frontend:
-    build:
-      context: ../../Desktop/frontend/kusho-new-dashboard
-      dockerfile: Dockerfile.frontend
+    image: kusho_frontend:latest
     ports:
       - "5173:5173"
     # volumes:
