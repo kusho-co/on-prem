@@ -19,11 +19,11 @@
 -- Table structure for table `api_key_workspace_mapping`
 --
 
--- CREATE DATABASE IF NOT EXISTS notes;
+CREATE DATABASE IF NOT EXISTS notes;
 CREATE DATABASE IF NOT EXISTS testing;
 
 -- Grant privileges to kusho user for both databases
--- GRANT ALL PRIVILEGES ON notes.* TO 'kusho'@'%';
+GRANT ALL PRIVILEGES ON notes.* TO 'kusho'@'%';
 GRANT ALL PRIVILEGES ON testing.* TO 'kusho'@'%';
 FLUSH PRIVILEGES;
 
