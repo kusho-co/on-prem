@@ -24,8 +24,8 @@ services:
       - MYSQL_ROOT_PASSWORD=12345
       - MYSQL_USER=kusho
       - MYSQL_PASSWORD=12345
-    # ports:
-    #   - "3306:3306"
+    ports:
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
@@ -39,8 +39,8 @@ services:
 
   redis:
     image: redis:6.2-alpine
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
