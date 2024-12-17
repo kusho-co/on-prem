@@ -10,10 +10,10 @@ services:
       - KUSHO_LLM_PROVIDER=openai
       - KUSHO_MYSQL_USERNAME=root
       - KUSHO_MYSQL_PASSWORD=password
-      - KUSHO_MYSQL_HOST=127.0.0.1
+      - KUSHO_MYSQL_HOST=db
       - KUSHO_MYSQL_PORT=3306
       - KUSHO_MYSQL_DB=testing
-      - KUSHO_REDIS_HOST=127.0.0.1
+      - KUSHO_REDIS_HOST=redis
       - KUSHO_REDIS_PORT=6379
       - KUSHO_REDIS_SSL=false
     depends_on:
@@ -65,10 +65,10 @@ services:
       - KUSHO_LLM_PROVIDER=openai
       - KUSHO_MYSQL_USERNAME=root
       - KUSHO_MYSQL_PASSWORD=password
-      - KUSHO_MYSQL_HOST=127.0.0.1
+      - KUSHO_MYSQL_HOST=db
       - KUSHO_MYSQL_PORT=3306
       - KUSHO_MYSQL_DB=testing
-      - KUSHO_REDIS_HOST=127.0.0.1
+      - KUSHO_REDIS_HOST=redis
       - KUSHO_REDIS_PORT=6379
       - KUSHO_REDIS_SSL=false
     depends_on:
