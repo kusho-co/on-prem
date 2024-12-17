@@ -82,6 +82,8 @@ services:
     image: kusho_frontend:latest
     ports:
       - "5173:5173"
+    environment:
+      - KUSHO_BACKEND_URL="https://op-be.kusho.dev"
     depends_on:
       - backend
 
