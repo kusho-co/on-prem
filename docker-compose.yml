@@ -4,18 +4,18 @@ services:
     ports:
       - "8080:80"
     environment:
-      - ENVIRONMENT="prod"
-      - KUSHO_FRONTEND_URL="https://op.kusho.dev"
-      - KUSHO_BACKEND_URL="https://op-be.kusho.dev"
-      - KUSHO_LLM_PROVIDER="openai"
-      - KUSHO_MYSQL_USERNAME="root"
-      - KUSHO_MYSQL_PASSWORD="password"
-      - KUSHO_MYSQL_HOST="127.0.0.1"
+      - ENVIRONMENT=prod
+      - KUSHO_FRONTEND_URL=https://op.kusho.dev
+      - KUSHO_BACKEND_URL=https://op-be.kusho.dev
+      - KUSHO_LLM_PROVIDER=openai
+      - KUSHO_MYSQL_USERNAME=root
+      - KUSHO_MYSQL_PASSWORD=password
+      - KUSHO_MYSQL_HOST=127.0.0.1
       - KUSHO_MYSQL_PORT=3306
-      - KUSHO_MYSQL_DB="testing"
-      - KUSHO_REDIS_HOST="127.0.0.1"
+      - KUSHO_MYSQL_DB=testing
+      - KUSHO_REDIS_HOST=127.0.0.1
       - KUSHO_REDIS_PORT=6379
-      - KUSHO_REDIS_SSL="false"
+      - KUSHO_REDIS_SSL=false
     depends_on:
       db:
         condition: service_healthy
@@ -59,18 +59,18 @@ services:
     image: kusho_worker:latest
     command: rq worker --url redis://redis:6379
     environment:
-      - ENVIRONMENT="prod"
-      - KUSHO_FRONTEND_URL="https://op.kusho.dev"
-      - KUSHO_BACKEND_URL="https://op-be.kusho.dev"
-      - KUSHO_LLM_PROVIDER="openai"
-      - KUSHO_MYSQL_USERNAME="root"
-      - KUSHO_MYSQL_PASSWORD="password"
-      - KUSHO_MYSQL_HOST="127.0.0.1"
+      - ENVIRONMENT=prod
+      - KUSHO_FRONTEND_URL=https://op.kusho.dev
+      - KUSHO_BACKEND_URL=https://op-be.kusho.dev
+      - KUSHO_LLM_PROVIDER=openai
+      - KUSHO_MYSQL_USERNAME=root
+      - KUSHO_MYSQL_PASSWORD=password
+      - KUSHO_MYSQL_HOST=127.0.0.1
       - KUSHO_MYSQL_PORT=3306
-      - KUSHO_MYSQL_DB="testing"
-      - KUSHO_REDIS_HOST="127.0.0.1"
+      - KUSHO_MYSQL_DB=testing
+      - KUSHO_REDIS_HOST=127.0.0.1
       - KUSHO_REDIS_PORT=6379
-      - KUSHO_REDIS_SSL="false"
+      - KUSHO_REDIS_SSL=false
     depends_on:
       db:
         condition: service_healthy
@@ -83,7 +83,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - KUSHO_BACKEND_URL="https://op-be.kusho.dev"
+      - KUSHO_BACKEND_URL=https://op-be.kusho.dev
     depends_on:
       - backend
 
