@@ -1,0 +1,232 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template for Kusho application stack'
+
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair
+    Type: AWS::EC2::KeyPair::KeyName
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.medium
+  MySQLPassword:
+    Description: Password for MySQL root user
+    Type: String
+    NoEcho: true
+    Default: password
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Select a VPC
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Select a subnet in your VPC
+
+Resources:
+  KushoSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Kusho application
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 5173
+          ToPort: 5173
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 6379
+          ToPort: 6379
+          CidrIp: 0.0.0.0/0
+
+  KushoInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds: 
+        - !Ref KushoSecurityGroup
+      ImageId: ami-0261755bbcb8c4a84  # Amazon Linux 2 AMI (update as needed for your region)
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          
+          # Update system and install Docker
+          yum update -y
+          yum install -y docker git jq
+          systemctl start docker
+          systemctl enable docker
+          usermod -a -G docker ec2-user
+
+          # Install Docker Compose
+          curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+          # Create application directory
+          mkdir -p /opt/kusho
+          cd /opt/kusho
+
+          # Create docker-compose.yml
+          cat > docker-compose.yml << 'EOL'
+          version: '3'
+          services:
+            backend:
+              image: kusho_backend:latest
+              ports:
+                - "8080:80"
+              environment:
+                - ENVIRONMENT=prod
+                - KUSHO_FRONTEND_URL=https://op.kusho.dev
+                - KUSHO_BACKEND_URL=https://op-be.kusho.dev
+                - KUSHO_LLM_PROVIDER=openai
+                - KUSHO_MYSQL_USERNAME=root
+                - KUSHO_MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                - KUSHO_MYSQL_HOST=db
+                - KUSHO_MYSQL_PORT=3306
+                - KUSHO_MYSQL_DB=testing
+                - KUSHO_REDIS_HOST=redis
+                - KUSHO_REDIS_PORT=6379
+                - KUSHO_REDIS_SSL=false
+              depends_on:
+                db:
+                  condition: service_healthy
+
+            db:
+              image: mysql:8.0
+              command: --default-authentication-plugin=mysql_native_password
+              restart: always
+              environment:
+                - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+              ports:
+                - "3306:3306"
+              volumes:
+                - mysql_data:/var/lib/mysql
+              healthcheck:
+                test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+                interval: 10s
+                timeout: 5s
+                retries: 5
+              cap_add:
+                - SYS_NICE
+
+            redis:
+              image: redis:6.2-alpine
+              ports:
+                - "6379:6379"
+              volumes:
+                - redis_data:/data
+              command: redis-server --appendonly yes
+              healthcheck:
+                test: ["CMD", "redis-cli", "ping"]
+                interval: 5s
+                timeout: 3s
+                retries: 5
+              restart: always
+
+            worker:
+              image: kusho_worker:latest
+              command: rq worker --url redis://redis:6379
+              environment:
+                - ENVIRONMENT=prod
+                - KUSHO_FRONTEND_URL=https://op.kusho.dev
+                - KUSHO_BACKEND_URL=https://op-be.kusho.dev
+                - KUSHO_LLM_PROVIDER=openai
+                - KUSHO_MYSQL_USERNAME=root
+                - KUSHO_MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                - KUSHO_MYSQL_HOST=db
+                - KUSHO_MYSQL_PORT=3306
+                - KUSHO_MYSQL_DB=testing
+                - KUSHO_REDIS_HOST=redis
+                - KUSHO_REDIS_PORT=6379
+                - KUSHO_REDIS_SSL=false
+              depends_on:
+                db:
+                  condition: service_healthy
+                redis:
+                  condition: service_healthy
+              restart: always
+
+            frontend:
+              image: kusho_frontend:latest
+              ports:
+                - "5173:5173"
+              environment:
+                - KUSHO_BACKEND_URL=https://op-be.kusho.dev
+              depends_on:
+                - backend
+
+          volumes:
+            mysql_data:
+            redis_data:
+          EOL
+
+          # Create environment file
+          cat > .env << EOL
+          MYSQL_ROOT_PASSWORD=${MySQLPassword}
+          EOL
+
+          # Create systemd service
+          cat > /etc/systemd/system/kusho.service << 'EOL'
+          [Unit]
+          Description=Kusho Application Stack
+          After=docker.service
+          Requires=docker.service
+
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          WorkingDirectory=/opt/kusho
+          ExecStart=/usr/local/bin/docker-compose up -d
+          ExecStop=/usr/local/bin/docker-compose down
+          StandardOutput=syslog
+          StandardError=syslog
+          SyslogIdentifier=kusho
+
+          [Install]
+          WantedBy=multi-user.target
+          EOL
+
+          # Enable and start the service
+          systemctl enable kusho.service
+          systemctl start kusho.service
+
+      Tags:
+        - Key: Name
+          Value: Kusho Application
+
+Outputs:
+  InstanceId:
+    Description: Instance ID of the created EC2 instance
+    Value: !Ref KushoInstance
+  PublicIP:
+    Description: Public IP address of the EC2 instance
+    Value: !GetAtt KushoInstance.PublicIp
+  PublicDNS:
+    Description: Public DNS name of the EC2 instance
+    Value: !GetAtt KushoInstance.PublicDnsName
+  BackendURL:
+    Description: URL for the backend service
+    Value: !Sub http://${KushoInstance.PublicDnsName}:8080
+  FrontendURL:
+    Description: URL for the frontend service
+    Value: !Sub http://${KushoInstance.PublicDnsName}:5173
