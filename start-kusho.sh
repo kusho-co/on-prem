@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # start frontend
-sudo docker run --network host -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" -d kusho_frontend:latest node server/server.js
+sudo docker run --network host -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" -d registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.0 node server/server.js
 
 # start redis
 sudo docker run --network host -d redis:6.2-alpine
@@ -45,7 +45,7 @@ sudo docker run \
   -e KUSHO_PINECONE_ASSISTANT_API_KEY="${KUSHO_PINECONE_ASSISTANT_API_KEY}" \
   -e KUSHO_POSTHOG_URL="${KUSHO_POSTHOG_URL}" \
   -e KUSHO_POSTHOG_API_KEY="${KUSHO_POSTHOG_API_KEY}" \
-  -d kusho_backend:latest
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0
 
 # start rq
 sudo docker run \
@@ -79,7 +79,7 @@ sudo docker run \
   -e KUSHO_PINECONE_ASSISTANT_API_KEY="${KUSHO_PINECONE_ASSISTANT_API_KEY}" \
   -e KUSHO_POSTHOG_URL="${KUSHO_POSTHOG_URL}" \
   -e KUSHO_POSTHOG_API_KEY="${KUSHO_POSTHOG_API_KEY}" \
-  -d kusho_backend:latest rq worker
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0 rq worker
 
 # start jobs
 sudo docker run \
@@ -113,4 +113,4 @@ sudo docker run \
   -e KUSHO_PINECONE_ASSISTANT_API_KEY="${KUSHO_PINECONE_ASSISTANT_API_KEY}" \
   -e KUSHO_POSTHOG_URL="${KUSHO_POSTHOG_URL}" \
   -e KUSHO_POSTHOG_API_KEY="${KUSHO_POSTHOG_API_KEY}" \
-  -d kusho_backend:latest "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0 "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"
