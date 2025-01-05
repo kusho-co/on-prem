@@ -7,53 +7,30 @@
 
 ## Quick Start
 
-1. Create a `.env` file in the project root with the following variables:
-```env
-MYSQL_ROOT_PASSWORD=your_secure_password
-MYSQL_USER=your_db_user
-MYSQL_PASSWORD=your_secure_password
-OPENAI_API_KEY=your_api_key
-OPENAI_ORG_ID=your_org_id
-ENVIRONMENT=production
-```
-
-2. Start the services:
+1. Clone this repo
 ```bash
-docker-compose up -d
+git clone https://github.com/kusho-co/on-prem.git
 ```
 
-3. Verify all services are healthy:
+2. Change directory to `on-prem`. This is needed for next set of steps. 
 ```bash
-docker-compose ps
+cd on-prem
 ```
 
-## Service Configuration
+3. Run the setup script. This will install docker if not already present and create environment variables. Please go through this script and add set environment variables before running this.   
+```bash
+bash setup-kusho.sh     
+```
 
-### Backend API Server
-- Default port: 8080
-- Configuration via environment variables:
-  - `MYSQL_USERNAME`: Database username
-  - `MYSQL_PASSWORD`: Database password
-  - `MYSQL_HOST`: Database hostname
-  - `REDIS_HOST`: Redis hostname
-  - `REDIS_PORT`: Redis port
-  - `OPENAI_API_KEY`: OpenAI API key
-  - `OPENAI_ORG_ID`: OpenAI Organization ID
+4. Run the start script. It will take a couple of minutes for the services to come up.
+```bash
+bash start-kusho.sh
+```
 
-### Frontend Dashboard
-- Default port: 5173
-- Accessible at: `http://localhost:5173`
-  
-
-### MySQL Database
-- Default port: 3306
-- Persistence: Data stored in named volume `mysql_data`
-
-### Redis Cache
-- Default port: 6379
-- Persistence: AOF enabled
-- Data stored in named volume `redis_data`
-
+6. Verify all services are healthy. This should show 6 services - backend, frontend, mysql, redis, rq and cron jobs
+```bash
+sudo docker ps
+```
 
 ## Volume Management
 The deployment uses two named volumes:
