@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kusho-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kusho-frontend
+  template:
+    metadata:
+      labels:
+        app: kusho-frontend
+    spec:
+      containers:
+      - name: kusho-frontend
+        image: registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.0
+        command: ["node", "server/server.js"]
+        env:
+        - name: KUSHO_BACKEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: kusho-config
+              key: KUSHO_BACKEND_URL
