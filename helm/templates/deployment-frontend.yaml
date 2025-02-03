@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: kusho-frontend
+  template:
+    metadata:
+      labels:
+        app: kusho-frontend
+    spec:
+      containers:
+      - name: kusho-frontend
+        image: {{ .Values.frontend.image }}
+        command: ["node", "server/server.js"]
+        env:
+        - name: KUSHO_BACKEND_URL
+          value: "{{ .Values.environment }}"
