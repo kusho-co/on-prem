@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kusho-rq-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kusho-rq-worker
+  template:
+    metadata:
+      labels:
+        app: kusho-rq-worker
+    spec:
+      containers:
+      - name: kusho-rq-worker
+        image: registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0
+        command: ["rq", "worker"]
+        envFrom:
+        - configMapRef:
+            name: kusho-config
+        - secretRef:
+            name: kusho-secrets
