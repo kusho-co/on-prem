@@ -1,0 +1,23 @@
+environment: "production"
+backend:
+  image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0"
+  replicas: 1
+frontend:
+  image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.0"
+  replicas: 1
+rqWorker:
+  replicas: 1
+cronJobs:
+  schedule: "*/10 * * * *"
+
+secrets:
+  MYSQL_USERNAME: ""
+  MYSQL_PASSWORD: ""
+  SENDGRID_API_KEY: ""
+  AWS_ACCESS_KEY_ID: ""
+  AWS_SECRET_ACCESS_KEY: ""
+  SENTRY_DSN: ""
+  KINDE_CLIENT_ID: ""
+  KINDE_CLIENT_SECRET: ""
+  OPENAI_API_KEY: ""
+  POSTHOG_API_KEY: ""
