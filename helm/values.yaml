@@ -1,23 +1,46 @@
 environment: "production"
+
 backend:
   image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0"
   replicas: 1
+
 frontend:
   image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.0"
   replicas: 1
+
 rqWorker:
   replicas: 1
+
 cronJobs:
   schedule: "*/10 * * * *"
 
 secrets:
-  MYSQL_USERNAME: ""
-  MYSQL_PASSWORD: ""
-  SENDGRID_API_KEY: ""
-  AWS_ACCESS_KEY_ID: ""
-  AWS_SECRET_ACCESS_KEY: ""
-  SENTRY_DSN: ""
-  KINDE_CLIENT_ID: ""
-  KINDE_CLIENT_SECRET: ""
-  OPENAI_API_KEY: ""
-  POSTHOG_API_KEY: ""
+  ENVIRONMENT: ""
+  KUSHO_FRONTEND_URL: ""
+  KUSHO_BACKEND_URL: ""
+  KUSHO_LLM_PROVIDER: ""
+  KUSHO_MYSQL_USERNAME: ""
+  KUSHO_MYSQL_PASSWORD: ""
+  KUSHO_MYSQL_HOST: ""
+  KUSHO_MYSQL_PORT: ""
+  KUSHO_MYSQL_DB: ""
+  KUSHO_REDIS_HOST: ""
+  KUSHO_REDIS_PORT: ""
+  KUSHO_REDIS_SSL: ""
+  KUSHO_SENDGRID_API_KEY: ""
+  KUSHO_AWS_ACCESS_KEY_ID: ""
+  KUSHO_AWS_SECRET_ACCESS_KEY: ""
+  KUSHO_AWS_REGION: ""
+  KUSHO_AWS_BEDROCK_REGION: ""
+  KUSHO_AWS_EXPORTS_BUCKET_NAME: ""
+  KUSHO_SENTRY_DSN: ""
+  KUSHO_KINDE_DOMAIN: ""
+  KUSHO_KINDE_CLIENT_ID: ""
+  KUSHO_KINDE_CLIENT_SECRET: ""
+  KUSHO_KINDE_CODE_VERIFIER: ""
+  KUSHO_OPENAI_ORG_ID: ""
+  KUSHO_OPENAI_API_KEY: ""
+  KUSHO_PINECONE_ASSISTANT_NAME: ""
+  KUSHO_PINECONE_ASSISTANT_API_KEY: ""
+  KUSHO_POSTHOG_URL: ""
+  KUSHO_POSTHOG_API_KEY: ""
