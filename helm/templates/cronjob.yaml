@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-jobs
+spec:
+  schedule: "{{ .Values.cronJobs.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kusho-jobs
+            image: {{ .Values.backend.image }}
+            command: ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"]
+            envFrom:
+            - configMapRef:
+                name: kusho-config
+            - secretRef:
+                name: kusho-secrets
+          restartPolicy: OnFailure
