@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: kusho-backend
+  template:
+    metadata:
+      labels:
+        app: kusho-backend
+    spec:
+      containers:
+      - name: kusho-backend
+        image: {{ .Values.backend.image }}
+        envFrom:
+        - configMapRef:
+            name: kusho-config
+        - secretRef:
+            name: kusho-secrets
