@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-rqworker
+spec:
+  replicas: {{ .Values.rqWorker.replicas }}
+  selector:
+    matchLabels:
+      app: kusho-rqworker
+  template:
+    metadata:
+      labels:
+        app: kusho-rqworker
+    spec:
+      containers:
+      - name: kusho-rqworker
+        image: {{ .Values.backend.image }}
+        command: ["python", "-m", "rq", "worker"]
+        envFrom:
+        - configMapRef:
+            name: kusho-config
+        - secretRef:
+            name: kusho-secrets
