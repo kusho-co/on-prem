@@ -122,4 +122,5 @@ sudo docker run \
   -e KUSHO_MAILCHIMP_API_KEY="${KUSHO_MAILCHIMP_API_KEY}" \
   -e KUSHO_MAILCHIMP_SERVER="${KUSHO_MAILCHIMP_SERVER}" \
   -e KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID="${KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID}" \
+  -e PYTHONPATH="/app" \
   -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.2 sh -c "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"
