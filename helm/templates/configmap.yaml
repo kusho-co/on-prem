@@ -3,17 +3,17 @@ kind: ConfigMap
 metadata:
   name: kusho-config
 data:
-  ENVIRONMENT: "{{ .Values.environment }}"
-  KUSHO_FRONTEND_URL: "{{ .Values.secrets.KUSHO_FRONTEND_URL }}"
-  KUSHO_BACKEND_URL: "{{ .Values.secrets.KUSHO_BACKEND_URL }}"
-  KUSHO_LLM_PROVIDER: "{{ .Values.secrets.KUSHO_LLM_PROVIDER }}"
-  KUSHO_MYSQL_HOST: "{{ .Values.secrets.KUSHO_MYSQL_HOST }}"
-  KUSHO_MYSQL_PORT: "{{ .Values.secrets.KUSHO_MYSQL_PORT }}"
-  KUSHO_MYSQL_DB: "{{ .Values.secrets.KUSHO_MYSQL_DB }}"
-  KUSHO_REDIS_HOST: "{{ .Values.secrets.KUSHO_REDIS_HOST }}"
-  KUSHO_REDIS_PORT: "{{ .Values.secrets.KUSHO_REDIS_PORT }}"
-  KUSHO_REDIS_SSL: "{{ .Values.secrets.KUSHO_REDIS_SSL }}"
-  KUSHO_AWS_REGION: "{{ .Values.secrets.KUSHO_AWS_REGION }}"
-  KUSHO_AWS_BEDROCK_REGION: "{{ .Values.secrets.KUSHO_AWS_BEDROCK_REGION }}"
-  KUSHO_AWS_EXPORTS_BUCKET_NAME: "{{ .Values.secrets.KUSHO_AWS_EXPORTS_BUCKET_NAME }}"
-  KUSHO_POSTHOG_URL: "{{ .Values.secrets.KUSHO_POSTHOG_URL }}"
+  ENVIRONMENT: {{ .Values.environment | quote }}
+  KUSHO_FRONTEND_URL: {{ .Values.secrets.KUSHO_FRONTEND_URL | quote }}
+  KUSHO_BACKEND_URL: {{ .Values.secrets.KUSHO_BACKEND_URL | quote }}
+  KUSHO_LLM_PROVIDER: {{ .Values.secrets.KUSHO_LLM_PROVIDER | quote }}
+  KUSHO_MYSQL_HOST: {{ .Values.secrets.KUSHO_MYSQL_HOST | quote }}
+  KUSHO_MYSQL_PORT: {{ .Values.secrets.KUSHO_MYSQL_PORT | quote }}
+  KUSHO_MYSQL_DB: {{ .Values.secrets.KUSHO_MYSQL_DB | quote }}
+  KUSHO_REDIS_HOST: {{ .Values.secrets.KUSHO_REDIS_HOST | quote }}
+  KUSHO_REDIS_PORT: {{ .Values.secrets.KUSHO_REDIS_PORT | quote }}
+  KUSHO_REDIS_SSL: {{ .Values.secrets.KUSHO_REDIS_SSL | quote }}
+  KUSHO_AWS_REGION: {{ .Values.secrets.KUSHO_AWS_REGION | quote }}
+  KUSHO_AWS_BEDROCK_REGION: {{ .Values.secrets.KUSHO_AWS_BEDROCK_REGION | quote }}
+  KUSHO_AWS_EXPORTS_BUCKET_NAME: {{ .Values.secrets.KUSHO_AWS_EXPORTS_BUCKET_NAME | quote }}
+  KUSHO_POSTHOG_URL: {{ .Values.secrets.KUSHO_POSTHOG_URL | quote }}
