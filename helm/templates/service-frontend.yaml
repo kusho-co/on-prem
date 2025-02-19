@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kusho-frontend-service
+  namespace: {{ .Values.namespace | default "default" }}
 spec:
   selector:
     app: kusho-frontend
