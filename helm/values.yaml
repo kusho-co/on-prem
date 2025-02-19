@@ -1,5 +1,7 @@
 environment: "production"
 
+namespace: "default"
+
 backend:
   image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.0"
   replicas: 1
@@ -47,3 +49,7 @@ secrets:
   KUSHO_MAILCHIMP_API_KEY: ""
   KUSHO_MAILCHIMP_SERVER: ""
   KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID: ""
+
+imagePullSecret:
+  dockerconfigjson: ""
+
