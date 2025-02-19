@@ -22,4 +22,4 @@ spec:
         command: ["node", "server/server.js"]
         env:
         - name: KUSHO_BACKEND_URL
-          value: {{ .Values.environment }}
+          value: {{ .Values.secrets.KUSHO_BACKEND_URL }}
