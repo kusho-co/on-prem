@@ -16,6 +16,9 @@ spec:
             image: {{ .Values.backend.image }}
             imagePullPolicy: Always
             command: ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"]
+            env:
+            - name: PYTHONPATH
+              value: "/app"
             envFrom:
             - configMapRef:
                 name: kusho-config
