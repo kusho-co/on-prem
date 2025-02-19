@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-frontend
+  name: kusho-frontend
 spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
@@ -21,4 +21,4 @@ spec:
         command: ["node", "server/server.js"]
         env:
         - name: KUSHO_BACKEND_URL
-          value: "{{ .Values.environment }}"
+          value: {{ .Values.environment }}
