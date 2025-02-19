@@ -2,8 +2,9 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: kusho-jobs
+  namespace: {{ .Values.namespace | default "default" }}
 spec:
-  schedule: "{{ .Values.cronJobs.schedule }}"
+  schedule: {{ .Values.cronJobs.schedule }}
   jobTemplate:
     spec:
       template:
