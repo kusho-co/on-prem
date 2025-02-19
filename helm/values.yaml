@@ -29,6 +29,7 @@ secrets:
   KUSHO_REDIS_HOST: ""
   KUSHO_REDIS_PORT: ""
   KUSHO_REDIS_SSL: ""
+  KUSHO_REDIS_PROTOCOL: ""  # "redis" if ssl is false, "rediss" if ssl is true. need this for rq worker setup
   KUSHO_SENDGRID_API_KEY: ""
   KUSHO_AWS_ACCESS_KEY_ID: ""
   KUSHO_AWS_SECRET_ACCESS_KEY: ""
