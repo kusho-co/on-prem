@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kusho-config
+  namespace: {{ .Values.namespace | default "default" }}
 data:
   ENVIRONMENT: {{ .Values.environment | quote }}
   KUSHO_FRONTEND_URL: {{ .Values.secrets.KUSHO_FRONTEND_URL | quote }}
