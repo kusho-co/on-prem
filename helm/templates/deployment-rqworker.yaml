@@ -19,7 +19,15 @@ spec:
       - name: kusho-rqworker
         image: {{ .Values.backend.image }}
         imagePullPolicy: Always
-        command: ["rq", "worker"]
+        command: [
+            "rq",
+            "worker",
+            "--with-scheduler",
+            "--url",
+            "{{ .Values.secrets.KUSHO_REDIS_PROTOCOL }}://{{ .Values.secrets.KUSHO_REDIS_HOST }}:{{ .Values.secrets.KUSHO_REDIS_PORT }}",
+            "-c",
+            "rq_sentry"
+        ]
         envFrom:
         - configMapRef:
             name: kusho-config
