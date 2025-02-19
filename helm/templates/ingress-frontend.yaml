@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ split "://" .Values.secrets.KUSHO_FRONTEND_URL | last }}
+    - host: {{ regexReplaceAll "^https?://" "" .Values.secrets.KUSHO_FRONTEND_URL }}
       http:
         paths:
           - path: /
