@@ -12,6 +12,8 @@ spec:
       labels:
         app: kusho-backend
     spec:
+      imagePullSecrets:
+      - name: kusho-registry-secret
       containers:
       - name: kusho-backend
         image: {{ .Values.backend.image }}
@@ -20,3 +22,4 @@ spec:
             name: kusho-config
         - secretRef:
             name: kusho-secrets
+      
