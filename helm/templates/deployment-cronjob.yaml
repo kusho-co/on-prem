@@ -8,6 +8,8 @@ spec:
     spec:
       template:
         spec:
+          imagePullSecrets:
+          - name: kusho-registry-secret
           containers:
           - name: kusho-jobs
             image: {{ .Values.backend.image }}
