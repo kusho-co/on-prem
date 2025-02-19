@@ -16,4 +16,5 @@ data:
   KUSHO_AWS_REGION: {{ .Values.secrets.KUSHO_AWS_REGION | quote }}
   KUSHO_AWS_BEDROCK_REGION: {{ .Values.secrets.KUSHO_AWS_BEDROCK_REGION | quote }}
   KUSHO_AWS_EXPORTS_BUCKET_NAME: {{ .Values.secrets.KUSHO_AWS_EXPORTS_BUCKET_NAME | quote }}
+  KUSHO_KINDE_DOMAIN: {{ .Values.secrets.KUSHO_KINDE_DOMAIN | quote }}
   KUSHO_POSTHOG_URL: {{ .Values.secrets.KUSHO_POSTHOG_URL | quote }}
