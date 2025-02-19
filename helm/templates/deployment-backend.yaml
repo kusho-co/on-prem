@@ -17,6 +17,7 @@ spec:
       containers:
       - name: kusho-backend
         image: {{ .Values.backend.image }}
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: kusho-config
