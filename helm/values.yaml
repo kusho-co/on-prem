@@ -51,5 +51,5 @@ secrets:
   KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID: ""
 
 imagePullSecret:
-  dockerconfigjson: ""
+  dockerconfigjson: "BASE64_ENCODED_DOCKER_CONFIG"
 
