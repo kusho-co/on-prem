@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: op-be.kusho.ai
+    - host: {{ split "://" .Values.secret.KUSHO_BACKEND_URL | last }}
       http:
         paths:
           - path: /
