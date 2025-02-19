@@ -17,6 +17,7 @@ spec:
       containers:
       - name: kusho-frontend
         image: {{ .Values.frontend.image }}
+        imagePullPolicy: Always
         command: ["node", "server/server.js"]
         env:
         - name: KUSHO_BACKEND_URL
