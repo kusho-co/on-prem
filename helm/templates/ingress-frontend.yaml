@@ -19,4 +19,4 @@ spec:
               service:
                 name: kusho-frontend-service
                 port:
-                  number: 80
+                  number: 5173
