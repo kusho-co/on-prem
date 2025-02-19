@@ -12,6 +12,8 @@ spec:
       labels:
         app: kusho-rqworker
     spec:
+      imagePullSecrets:
+      - name: kusho-registry-secret
       containers:
       - name: kusho-rqworker
         image: {{ .Values.backend.image }}
