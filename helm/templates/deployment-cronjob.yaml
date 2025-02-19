@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Release.Name }}-jobs
+  name: kusho-jobs
 spec:
   schedule: "{{ .Values.cronJobs.schedule }}"
   jobTemplate:
