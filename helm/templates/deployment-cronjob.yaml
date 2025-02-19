@@ -4,7 +4,7 @@ metadata:
   name: kusho-jobs
   namespace: {{ .Values.namespace | default "default" }}
 spec:
-  schedule: {{ .Values.cronJobs.schedule }}
+  schedule: "{{ .Values.cronJobs.schedule }}"
   jobTemplate:
     spec:
       template:
