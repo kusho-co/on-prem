@@ -17,6 +17,7 @@ spec:
       containers:
       - name: kusho-rqworker
         image: {{ .Values.backend.image }}
+        imagePullPolicy: Always
         command: ["python", "-m", "rq", "worker"]
         envFrom:
         - configMapRef:
