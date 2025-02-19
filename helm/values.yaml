@@ -51,5 +51,7 @@ secrets:
   KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID: ""
 
 imagePullSecret:
+  # to create case64 encoded dockerconfig json, use this command. TOKEN will be provided during onboarding
+  # echo -n '{"auths":{"registry.digitalocean.com":{"username":"<ACCESS_TOKEN>","password":"<ACCESS_TOKEN>"}}}' | base64 -w 0
   dockerconfigjson: "BASE64_ENCODED_DOCKER_CONFIG"
 
