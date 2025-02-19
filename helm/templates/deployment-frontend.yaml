@@ -12,6 +12,8 @@ spec:
       labels:
         app: kusho-frontend
     spec:
+      imagePullSecrets:
+      - name: kusho-registry-secret
       containers:
       - name: kusho-frontend
         image: {{ .Values.frontend.image }}
