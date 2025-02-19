@@ -17,7 +17,8 @@ cronJobs:
   schedule: "*/10 * * * *"
 
 secrets:
-  ENVIRONMENT: ""
+  ENVIRONMENT: "prod"
+  KUSHO_LICENSE_KEY: ""
   KUSHO_FRONTEND_URL: ""
   KUSHO_BACKEND_URL: ""
   KUSHO_LLM_PROVIDER: ""
@@ -50,6 +51,9 @@ secrets:
   KUSHO_MAILCHIMP_API_KEY: ""
   KUSHO_MAILCHIMP_SERVER: ""
   KUSHO_MAILCHIMP_KUSHO_AUDIENCE_ID: ""
+  KUSHO_ANTHROPIC_KEY: ""
+  KUSHO_ACTIVE_ANTHROPIC: true
+  KUSHO_CLAUDE_DEFAULT_MODEL: ""
 
 imagePullSecret:
   # to create case64 encoded dockerconfig json, use this command. TOKEN will be provided during onboarding
