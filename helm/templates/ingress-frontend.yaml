@@ -4,7 +4,7 @@ metadata:
   name: kusho-frontend-ingress
   namespace: {{ .Values.namespace | default "default" }}
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
 spec:
