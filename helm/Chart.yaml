@@ -2,6 +2,6 @@ apiVersion: v2
 name: kusho-chart
 description: A Helm chart for deploying Kusho backend, frontend, workers, and jobs.
 type: application
-version: 0.7.0
+version: 0.8.0
 appVersion: "1.0"
 dependencies: []
