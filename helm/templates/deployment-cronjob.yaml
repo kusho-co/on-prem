@@ -1,27 +1,30 @@
-apiVersion: batch/v1
-kind: CronJob
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: kusho-jobs
   namespace: {{ .Values.namespace | default "default" }}
 spec:
-  schedule: "{{ .Values.cronJobs.schedule }}"
-  jobTemplate:
+  replicas: {{ .Values.cronJobs.replicas }}
+  selector:
+    matchLabels:
+      app: kusho-jobs
+  template:
+    metadata:
+      labels:
+        app: kusho-jobs
     spec:
-      template:
-        spec:
-          imagePullSecrets:
-          - name: kusho-registry-secret
-          containers:
-          - name: kusho-jobs
-            image: {{ .Values.backend.image }}
-            imagePullPolicy: Always
-            command: ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"]
-            env:
-            - name: PYTHONPATH
-              value: "/app"
-            envFrom:
-            - configMapRef:
-                name: kusho-config
-            - secretRef:
-                name: kusho-secrets
-          restartPolicy: OnFailure
+      imagePullSecrets:
+      - name: kusho-registry-secret
+      containers:
+      - name: kusho-jobs
+        image: {{ .Values.backend.image }}
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.pyc prod; sleep 10; done"]
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        envFrom:
+        - configMapRef:
+            name: kusho-config
+        - secretRef:
+            name: kusho-secrets
