@@ -14,7 +14,7 @@ rqWorker:
   replicas: 1
 
 cronJobs:
-  schedule: "*/10 * * * *"
+  replicas: 1
 
 secrets:
   ENVIRONMENT: "prod"
