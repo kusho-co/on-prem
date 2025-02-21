@@ -19,6 +19,13 @@ spec:
       - name: kusho-frontend
         image: {{ .Values.frontend.image }}
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "2"     # Requesting 2 vCPUs
+            memory: "4Gi" # Requesting 4GB RAM
+          limits:
+            cpu: "4"     # Max limit of 4 vCPUs
+            memory: "8Gi" # Max limit of 8GB RAM
         command: ["node", "server/server.js"]
         env:
         - name: KUSHO_BACKEND_URL
