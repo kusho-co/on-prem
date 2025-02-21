@@ -19,6 +19,13 @@ spec:
       - name: kusho-jobs
         image: {{ .Values.backend.image }}
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "2"     # Requesting 2 vCPUs
+            memory: "4Gi" # Requesting 4GB RAM
+          limits:
+            cpu: "4"     # Max limit of 4 vCPUs
+            memory: "8Gi" # Max limit of 8GB RAM
         command: ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.pyc prod; sleep 10; done"]
         env:
         - name: PYTHONPATH
