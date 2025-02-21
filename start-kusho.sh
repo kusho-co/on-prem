@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # start frontend
-sudo docker run --network host -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" -d registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.1 node server/server.js
+sudo docker run --network host -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" -d registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.4 node server/server.js
 
 # start redis
 sudo docker run --network host -d redis:6.2-alpine
@@ -17,6 +17,7 @@ sudo docker run --network host \
 sudo docker run \
   --network host \
   -e ENVIRONMENT="${ENVIRONMENT}" \
+  -e KUSHO_LICENSE_KEY="${KUSHO_LICENSE_KEY}" \
   -e KUSHO_FRONTEND_URL="${KUSHO_FRONTEND_URL}" \
   -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" \
   -e KUSHO_LLM_PROVIDER="${KUSHO_LLM_PROVIDER}" \
@@ -51,12 +52,13 @@ sudo docker run \
   -e KUSHO_ANTHROPIC_KEY="${KUSHO_ANTHROPIC_KEY}" \
   -e KUSHO_ACTIVE_ANTHROPIC="${KUSHO_ACTIVE_ANTHROPIC}" \
   -e KUSHO_CLAUDE_DEFAULT_MODEL="${KUSHO_CLAUDE_DEFAULT_MODEL}" \
-  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.2
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.6
 
 # start rq
 sudo docker run \
   --network host \
   -e ENVIRONMENT="${ENVIRONMENT}" \
+  -e KUSHO_LICENSE_KEY="${KUSHO_LICENSE_KEY}" \
   -e KUSHO_FRONTEND_URL="${KUSHO_FRONTEND_URL}" \
   -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" \
   -e KUSHO_LLM_PROVIDER="${KUSHO_LLM_PROVIDER}" \
@@ -91,12 +93,13 @@ sudo docker run \
   -e KUSHO_ANTHROPIC_KEY="${KUSHO_ANTHROPIC_KEY}" \
   -e KUSHO_ACTIVE_ANTHROPIC="${KUSHO_ACTIVE_ANTHROPIC}" \
   -e KUSHO_CLAUDE_DEFAULT_MODEL="${KUSHO_CLAUDE_DEFAULT_MODEL}" \
-  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.2 rq worker
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.6 rq worker
 
 # start jobs
 sudo docker run \
   --network host \
   -e ENVIRONMENT="${ENVIRONMENT}" \
+  -e KUSHO_LICENSE_KEY="${KUSHO_LICENSE_KEY}" \
   -e KUSHO_FRONTEND_URL="${KUSHO_FRONTEND_URL}" \
   -e KUSHO_BACKEND_URL="${KUSHO_BACKEND_URL}" \
   -e KUSHO_LLM_PROVIDER="${KUSHO_LLM_PROVIDER}" \
@@ -132,4 +135,4 @@ sudo docker run \
   -e KUSHO_ACTIVE_ANTHROPIC="${KUSHO_ACTIVE_ANTHROPIC}" \
   -e KUSHO_CLAUDE_DEFAULT_MODEL="${KUSHO_CLAUDE_DEFAULT_MODEL}" \
   -e PYTHONPATH="/app" \
-  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.2 sh -c "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"
+  -d registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.6 sh -c "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"
