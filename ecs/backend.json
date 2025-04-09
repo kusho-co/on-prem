@@ -105,7 +105,7 @@
             "systemControls": []
         }
     ],
-    "family": "kusho-backend",
+    "family": "kusho-on-prem-backend",
     "executionRoleArn": "<Replace this with your task execution role ARN>",
     "networkMode": "awsvpc",
     "volumes": [],
