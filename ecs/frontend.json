@@ -37,7 +37,7 @@
             "systemControls": []
         }
     ],
-    "family": "kusho-frontend",
+    "family": "kusho-on-prem-frontend",
     "executionRoleArn": "<Replace this with your task execution role ARN>",
     "networkMode": "awsvpc",
     "volumes": [],
