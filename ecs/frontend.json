@@ -1,0 +1,55 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "frontend",
+            "image": "<Docker registry URL to be provided during onboarding>",
+            "repositoryCredentials": {
+                "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
+            },
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "frontend-5173-tcp",
+                    "containerPort": 5173,
+                    "hostPort": 5173,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "KUSHO_BACKEND_URL",
+                    "value": "<Replace this with your backend URL, e.g. https://kusho-be.your-domain.com>"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/kusho/frontend",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "<Replace this with your defailt region>",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "kusho-frontend",
+    "executionRoleArn": "<Replace this with your task execution role ARN>",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": []
+}
