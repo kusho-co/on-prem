@@ -1,0 +1,123 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "backend",
+            "image": "<Docker registry URL to be provided during onboarding>",
+            "repositoryCredentials": {
+                "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
+            },
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "backend-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "KUSHO_CLAUDE_DEFAULT_MODEL",
+                    "value": "claude-3-5-sonnet-20241022"
+                },
+                {
+                    "name": "ENVIRONMENT",
+                    "value": "prod"
+                },
+                {
+                    "name": "KUSHO_OPENAI_API_KEY",
+                    "value": "<Replace this with your OpenAI API key>"
+                },
+                {
+                    "name": "KUSHO_REDIS_HOST",
+                    "value": "<Replace this with your Redis hostname/IP>"
+                },
+                {
+                    "name": "KUSHO_LLM_PROVIDER",
+                    "value": "openai"
+                },
+                {
+                    "name": "ANTHROPIC_API_KEY",
+                    "value": "<Replace this with your Anthropic API key>"
+                },
+                {
+                    "name": "KUSHO_FRONTEND_URL",
+                    "value": "<Replace this with your frontend URL, e.g. https://kusho.your-domain.com>"
+                },
+                {
+                    "name": "KUSHO_BACKEND_URL",
+                    "value": "<Replace this with your backend URL, e.g. https://kusho-be.your-domain.com>"
+                },
+                {
+                    "name": "KUSHO_MYSQL_PORT",
+                    "value": "3306"
+                },
+                {
+                    "name": "KUSHO_MYSQL_USERNAME",
+                    "value": "<Replace this with the mysql username>"
+                },
+                {
+                    "name": "KUSHO_ACTIVE_ANTHROPIC",
+                    "value": "true"
+                },
+                {
+                    "name": "KUSHO_MYSQL_HOST",
+                    "value": "<Replace this with mysql hostname/IP>"
+                },
+                {
+                    "name": "KUSHO_ANTHROPIC_KEY",
+                    "value": "<Replace this with Anthropic API key>"
+                },
+                {
+                    "name": "KUSHO_REDIS_PORT",
+                    "value": "6379"
+                },
+                {
+                    "name": "KUSHO_OPENAI_ORG_ID",
+                    "value": "<Replace this with your OpenAI Org ID>"
+                },
+                {
+                    "name": "KUSHO_MYSQL_PASSWORD",
+                    "value": "<Replace this with your mysql password>"
+                },
+                {
+                    "name": "KUSHO_MYSQL_DB",
+                    "value": "testing"
+                },
+                {
+                    "name": "KUSHO_REDIS_SSL",
+                    "value": "true"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/kusho/backend",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "eu-north-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "kusho-backend",
+    "executionRoleArn": "<Replace this with your task execution role ARN>",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": []
+}
