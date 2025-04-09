@@ -85,6 +85,10 @@
                 {
                     "name": "KUSHO_REDIS_SSL",
                     "value": "true"
+                },
+                {
+                    "name": "PYTHONPATH",
+                    "value": "/app"
                 }
             ],
             "mountPoints": [],
