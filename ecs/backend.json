@@ -98,7 +98,7 @@
                 "options": {
                     "awslogs-group": "/ecs/kusho/backend",
                     "awslogs-create-group": "true",
-                    "awslogs-region": "eu-north-1",
+                    "awslogs-region": "<Replace this with your default region>",
                     "awslogs-stream-prefix": "ecs"
                 }
             },
