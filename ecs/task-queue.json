@@ -3,7 +3,15 @@
         {
             "name": "task-queue",
             "image": "<Docker registry URL to be provided during onboarding>",
-            "command": ["rq", "worker"],
+            "command": [
+                "rq",
+                "worker",
+                "--with-scheduler",
+                "--url",
+                "<redis or rediss>://<redis hostname or ip>:6379",
+                "-c",
+                "rq_sentry"
+            ],
             "repositoryCredentials": {
                 "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
             },
