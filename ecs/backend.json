@@ -23,6 +23,10 @@
                     "value": "claude-3-5-sonnet-20241022"
                 },
                 {
+                    "name": "KUSHO_LICENSE_KEY",
+                    "value": "<Replace this with the license key provided during onboarding>"
+                },
+                {
                     "name": "ENVIRONMENT",
                     "value": "prod"
                 },
