@@ -3,7 +3,7 @@
         {
             "name": "cronjob",
             "image": "<Docker registry URL to be provided during onboarding>",
-            "command": ["sh", "-c", "while true; do python3 jobs/test_cases_generation.py prod; sleep 10; done"],
+            "command": ["/bin/sh", "-c", "while true; do python3 jobs/test_cases_generation.pyc prod; sleep 10; done"],
             "repositoryCredentials": {
                 "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
             },
