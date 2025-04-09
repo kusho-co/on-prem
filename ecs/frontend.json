@@ -3,6 +3,7 @@
         {
             "name": "frontend",
             "image": "<Docker registry URL to be provided during onboarding>",
+            "command": ["node", "server.js"],
             "repositoryCredentials": {
                 "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
             },
