@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "backend",
-            "image": "<Docker registry URL to be provided during onboarding>",
+            "image": "registry.digitalocean.com/kusho-on-prem/kusho_backend:1.7",
             "repositoryCredentials": {
                 "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
             },
