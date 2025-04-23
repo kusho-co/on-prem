@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "frontend",
-            "image": "<Docker registry URL to be provided during onboarding>",
+            "image": "registry.digitalocean.com/kusho-on-prem/kusho_frontend:1.5",
             "command": ["node", "server/server.js"],
             "repositoryCredentials": {
                 "credentialsParameter": "<Replace this with the ARN of docker registry credentials secret created in Secrets Manager>"
