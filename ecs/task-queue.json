@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "task-queue",
-            "image": "<Docker registry URL to be provided during onboarding>",
+            "image": "registry.digitalocean.com/kusho-on-prem/kusho_backend:1.7",
             "command": [
                 "rq",
                 "worker",
