@@ -92,7 +92,7 @@
                 },
                 {
                     "name": "KUSHO_REDIS_SSL",
-                    "value": "true"
+                    "value": "<true or false based on whether SSL is turned on>"
                 }
             ],
             "mountPoints": [],
