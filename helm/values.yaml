@@ -3,11 +3,11 @@ environment: "prod"
 namespace: "default"
 
 backend:
-  image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_backend:1.6"
+  image: "registry.digitalocean.com/kusho-on-prem/kusho_backend:1.6"
   replicas: 1
 
 frontend:
-  image: "registry.digitalocean.com/kusho-cs-on-prem/kusho_frontend:1.4"
+  image: "registry.digitalocean.com/kusho-on-prem/kusho_frontend:1.4"
   replicas: 1
 
 rqWorker:
