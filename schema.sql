@@ -335,7 +335,8 @@ CREATE TABLE `public_test_case` (
 
 CREATE TABLE `public_test_suite` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `test_suite_name` varchar(100) DEFAULT NULL,
+  `uuid` varchar(50) DEFAULT NULL,
+  `test_suite_name` text,
   `user_id` int DEFAULT NULL,
   `method` varchar(15) DEFAULT 'GET',
   `url` varchar(500) NOT NULL,
@@ -349,7 +350,6 @@ CREATE TABLE `public_test_suite` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `json_url` varchar(100) DEFAULT NULL,
   `workspace_id` int DEFAULT NULL,
-  `uuid` varchar(50) DEFAULT NULL,
   `tags` text,
   `placeholder` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
