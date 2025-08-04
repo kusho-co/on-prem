@@ -301,7 +301,7 @@ CREATE TABLE `pre_run_script` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `script` text NOT NULL,
   `test_suite_id` int NOT NULL,
-  `workspace_id` tinyint NOT NULL,
+  `workspace_id` int NOT NULL,
   `run_on_every_test_case` tinyint DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
